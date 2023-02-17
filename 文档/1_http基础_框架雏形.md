@@ -1,7 +1,9 @@
 ## 文件结构
 ```bash
-|--gee/
-    |--gee.go
-    |--go.mod
-|--main.go
-|--go.mod
+|__gee/
+    |__gee.go
+    |__go.mod
+|__main.go
+|__go.mod
+```
+
