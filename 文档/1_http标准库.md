@@ -39,17 +39,14 @@ func http.HandleFunc(pattern string, handler func(http.ResponseWriter, *http.Req
 func http.ListenAndServe(addr string, handler http.Handler) error
 ```
 
-字段 Header http.Header
-
-Header 包含由服务器接收或由客户端发送的请求头字段。
-如果服务器收到带有header行的请求,
-```zsh
+字段 Header http.Header：Header 包含由服务器接收或由客户端发送的请求头字段。
+如果服务器收到带有header行的请求,如
+```html
 Host: example.com
 accept-encoding: gzip, deflate
 Accept-Language: en-us
 fOO: Bar
 foo: two
-then
 ```
 那么会转换成
 ```go
@@ -59,3 +56,12 @@ Header = map[string][]string{
     "Foo": {"Bar", "two"},
 }
 ```
+使用curl测试
+```bash
+haha@arch  ~/Desktop/proj  curl http://localhost:9999/                                                           ✔  26  10:48:47 
+URL.Path="/"
+ haha@arch  ~/Desktop/proj  curl http://localhost:9999/hello                                                      ✔  27  10:49:38 
+Header["User-Agent"]=["curl/7.87.0"]
+Header["Accept"]=["*/*"]
+```
+
