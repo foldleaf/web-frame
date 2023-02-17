@@ -38,3 +38,24 @@ func http.HandleFunc(pattern string, handler func(http.ResponseWriter, *http.Req
 
 func http.ListenAndServe(addr string, handler http.Handler) error
 ```
+
+字段 Header http.Header
+
+Header 包含由服务器接收或由客户端发送的请求头字段。
+如果服务器收到带有header行的请求,
+```zsh
+Host: example.com
+accept-encoding: gzip, deflate
+Accept-Language: en-us
+fOO: Bar
+foo: two
+then
+```
+那么会转换成
+```go
+Header = map[string][]string{
+    "Accept-Encoding": {"gzip, deflate"},
+    "Accept-Language": {"en-us"},
+    "Foo": {"Bar", "two"},
+}
+```
