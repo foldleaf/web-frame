@@ -41,7 +41,7 @@ type Engine struct {
 	router map[string]Handlerfunc
 }
 
-// 创建路由引擎
+// 创建路由引擎的实例
 func New() *Engine {
 	return &Engine{
 		router: make(map[string]Handlerfunc),
@@ -59,7 +59,7 @@ func (engine *Engine) addRoute(method string, pattern string, handler Handlerfun
 	engine.router[key] = handler
 }
 
-// 在 map 中加入预设的路由请求 “GET” “POST” 等
+// 在 map 中添加预设的路由请求 “GET” “POST” 等
 func (engine *Engine) GET(pattern string, handler Handlerfunc) {
 	engine.addRoute("GET", pattern, handler)
 }
@@ -67,8 +67,11 @@ func (engine *Engine) POST(pattern string, handler Handlerfunc) {
 	engine.addRoute("POST", pattern, handler)
 }
 
-// 实现 Handler 接口的 ServeHTTP 方法
-// 在Engine 的map里查找请求的方法路由(method+"-"+pattern),如果存在则返回映射的函数，不存在则404
+// 实现 Handler 接口的 ServeHTTP 方法。
+// 接受 http 请求 req *http.Request,
+// 在Engine 的map里查找请求的方法路由(method+"-"+pattern),
+// 如果存在则执行映射的函数，返回应答w http.ResponseWriter,
+// 如果不存在则404。
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	key := req.Method + "-" + req.URL.Path
 	if handler, ok := engine.router[key]; ok {
@@ -77,7 +80,7 @@ func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintf(w, "404 NOT FOUND:%s\n", req.URL)
 	}
 }
-
+// 封装一下 http.ListenAndServe，外部使用r.Run()即可执行
 func (engine *Engine) Run(addr string) (err error) {
 	return http.ListenAndServe(addr, engine)
 }
