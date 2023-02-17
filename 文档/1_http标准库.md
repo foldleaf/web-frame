@@ -56,11 +56,16 @@ Header = map[string][]string{
     "Foo": {"Bar", "two"},
 }
 ```
-使用curl测试
+使用curl命令行工具测试
 ```bash
-haha@arch  ~/Desktop/proj  curl http://localhost:9999/                                                           ✔  26  10:48:47 
+# 测试输入
+> curl http://localhost:9999/
+# 测试输出
 URL.Path="/"
- haha@arch  ~/Desktop/proj  curl http://localhost:9999/hello                                                      ✔  27  10:49:38 
+
+# 测试输入
+> curl http://localhost:9999/hello  
+# 测试输出
 Header["User-Agent"]=["curl/7.87.0"]
 Header["Accept"]=["*/*"]
 ```
